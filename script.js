@@ -19,18 +19,6 @@ const points = [
     },
 ];
 
-const points = [
-
-    {
-        lat: 50.445634,
-        lon: 2.815201,
-        adresse: '36 Rue Fénelon, Lens, Hauts-de-France',
-        etat: aucune information,
-        type: 'Maison',
-        histoire: 'aucune information, sur la maison ou même l'histoire. seul chose que l'on sait c'est que ce batiment sont protégé par des camera de sécuriter',
-    },
-];
-
 
 // Ajouter les points à la carte
 points.forEach(point => {
