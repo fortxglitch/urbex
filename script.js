@@ -16,7 +16,7 @@ const points = [
         etat: 4,
         type: 'Maison',
         histoire: 'Beaucoup de squateur, meuble voler. Histoire : dame décéder de vieillesse',
-        image: 'file:///C:/Users/FortXglitch/Desktop/urbex%20image/42%20Av.%20du%20G%C3%A9n%C3%A9ral%20Leclerc,%20Courri%C3%A8res,%20Hauts-de-France.png'
+        image: 'C:/Users/FortXglitch/Desktop/site Urbex/urbex image/maison1.png'
     },
     // Ajoutez d'autres points ici
 ];
