@@ -18,6 +18,14 @@ const points = [
         histoire: 'Beaucoup de squateur, meuble voler. Histoire : dame décéder de vieillesse',
     },
     // Ajoutez d'autres points ici
+        {
+        lat: 	50.445634,
+        lon: 2.815201,
+        adresse: '36 Rue Fénelon, Lens, Hauts-de-France',
+        etat: aucune information,
+        type: 'Maison',
+        histoire: 'aucune information, plus d'information plus tard',
+    },
 ];
 
 // Ajouter les points à la carte
