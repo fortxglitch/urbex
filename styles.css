@@ -1,96 +1,98 @@
-// Initialisation de la carte
-const map = L.map('map').setView([50.445634, 2.815201], 13);
-
-// Ajouter les tuiles de la carte (exemple avec OpenStreetMap)
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
-
-// Liste des points à ajouter
-const points = [
-    {
-        lat: 50.445634,
-        lon: 2.815201,
-        adresse: '36 Rue Fénelon, Lens, Hauts-de-France',
-        etat: 'aucune information',
-        type: 'Maison',
-        histoire: 'Aucune information sur la maison ou même son histoire. La seule chose que l\'on sait, c\'est que ce bâtiment est protégé par des caméras de sécurité.',
-        image: '',
-        name: 'Maison Lens' // Ajout d'un nom pour la recherche
-    },
-    {
-        lat: 50.4611454,
-        lon: 2.9501791,
-        adresse: '42 Av. du Général Leclerc, Courrières, Hauts-de-France',
-        etat: 4,
-        type: 'Maison',
-        histoire: 'Beaucoup de squatteurs, meubles volés. Histoire : dame décédée de vieillesse.',
-        image: '',
-        name: 'Maison Courrières' // Ajout d'un nom pour la recherche
-    }
-];
-
-// Créer une liste de marqueurs pour les points
-const markers = points.map(point => {
-    const marker = L.marker([point.lat, point.lon]);
-    const imageContent = point.image ? `<img src="${point.image}" class="popup-image" alt="Image">` : 'Image : non';
-    marker.bindPopup(`
-        <b>Adresse :</b> ${point.adresse} <br>
-        <b>État :</b> ${point.etat} sur 5 étoiles <br>
-        <b>Type :</b> ${point.type} <br>
-        <b>Histoire :</b> ${point.histoire} <br>
-        <b>Image :</b> ${imageContent}
-    `);
-    return { marker, name: point.name, lat: point.lat, lon: point.lon };
-});
-
-// Ajouter tous les marqueurs à la carte par défaut
-markers.forEach(({ marker }) => marker.addTo(map));
-
-// Fonction de recherche
-function searchPoints(query) {
-    const lowerCaseQuery = query.toLowerCase();
-    let latLngToZoom = null;
-
-    // Vérifiez chaque marqueur
-    markers.forEach(({ marker, name, lat, lon }) => {
-        if (name.toLowerCase().includes(lowerCaseQuery)) {
-            if (!map.hasLayer(marker)) {
-                marker.addTo(map); // Ajoute le marqueur à la carte si la recherche correspond
-            }
-            latLngToZoom = [lat, lon]; // Enregistrez la position pour le zoom
-        } else {
-            if (map.hasLayer(marker)) {
-                // Laissez les marqueurs visibles si la recherche correspond à la position
-            }
-        }
-    });
-
-    // Zoom sur le point trouvé avec animation douce
-    if (latLngToZoom) {
-        map.flyTo(latLngToZoom, 15, {
-            animate: true,
-            duration: 3 // La durée de l'animation en secondes
-        });
-    } else {
-        alert('Aucun point trouvé pour votre recherche.');
-    }
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
-// Gestion de la recherche
-document.getElementById('search-button').addEventListener('click', function() {
-    const query = document.getElementById('search-input').value;
-    searchPoints(query);
-});
+#map {
+    height: calc(100vh - 80px); /* Ajuste la hauteur pour la barre de recherche et la barre d'information */
+    width: 100%;
+}
 
-document.getElementById('search-input').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        document.getElementById('search-button').click();
-    }
-});
+/* Style pour les images dans les fenêtres contextuelles */
+.popup-image {
+    max-width: 200px; /* Ajustez la taille de l'image selon vos besoins */
+    max-height: 150px;
+    display: block;
+    margin: 0 auto;
+}
 
-// Gestion de l'affichage du message d'information
-document.getElementById('info-button').addEventListener('click', function() {
-    const infoMessage = document.getElementById('info-message');
-    infoMessage.classList.toggle('visible');
-});
+/* Barre de recherche en haut */
+#search-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000; /* Assurez-vous que la barre est au-dessus de la carte */
+}
+
+#search-input {
+    width: 60%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: white;
+    margin-left: 10px;
+}
+
+#search-button:hover {
+    background-color: #555;
+}
+
+/* Barre d'information en bas */
+#info-bar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000; /* Assurez-vous que la barre est au-dessus de la carte */
+}
+
+/* Style du bouton d'information */
+#info-button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+#info-button:hover {
+    background-color: #555;
+}
+
+/* Style pour le message d'information */
+#info-message {
+    position: fixed;
+    bottom: 50px; /* Positionné juste au-dessus de la barre d'information */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #444;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+    z-index: 1000; /* Assurez-vous que le message est au-dessus de la carte et de la barre */
+}
+
+#info-message.visible {
+    display: block;
+}
