@@ -1,5 +1,5 @@
 // Initialisation de la carte
-const map = L.map('map').setView([48.8566, 2.3522], 13); // Centrer la carte sur Paris avec un zoom de 13
+const map = L.map('map').setView([50.4611454, 2.9501791], 13); // Centrer la carte sur Paris avec un zoom de 13
 
 // Ajouter une couche de fond à la carte
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
