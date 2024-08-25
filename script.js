@@ -16,7 +16,6 @@ const points = [
         etat: 4,
         type: 'Maison',
         histoire: 'Beaucoup de squateur, meuble voler. Histoire : dame décéder de vieillesse',
-        image: 'C:/Users/FortXglitch/Desktop/site Urbex/urbex image/maison1.png'
     },
     // Ajoutez d'autres points ici
 ];
@@ -30,6 +29,5 @@ points.forEach(point => {
         <b>État :</b> ${point.etat} sur 5 étoiles <br>
         <b>Type :</b> ${point.type} <br>
         <b>Histoire :</b> ${point.histoire} <br>
-        <b>Image :</b> ${imageContent}
     `);
 });
